@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SGBIMFurnas.Dtos;
+namespace SGBIMFurnas.Dtos.EtapaDto;
 
 public class EtapaCreateDto
 {

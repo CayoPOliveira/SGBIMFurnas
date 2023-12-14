@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SGBIMFurnas.Dtos;
+using SGBIMFurnas.Dtos.EtapaDto;
 using SGBIMFurnas.Models;
 
 namespace SGBIMFurnas.Profiles;
