@@ -11,10 +11,10 @@ namespace SGBIMFurnas.Controllers;
 [Route("[controller]")]
 public class EtapaController : ControllerBase
 {
-    private EtapaContext _context;
+    private DatabaseContext _context;
     private IMapper _mapper;
 
-    public EtapaController(EtapaContext context, IMapper mapper) { 
+    public EtapaController(DatabaseContext context, IMapper mapper) { 
         _context = context;
         _mapper = mapper;
     }

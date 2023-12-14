@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Dtabase
 var ConnectionString = builder.Configuration.GetConnectionString("SGBIMConecction");
-builder.Services.AddDbContext<EtapaContext>(opts => opts.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
+builder.Services.AddDbContext<DatabaseContext>(opts => opts.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
 // Mapper (DTOs)
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Controller

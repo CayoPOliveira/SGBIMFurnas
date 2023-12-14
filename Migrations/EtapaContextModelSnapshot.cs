@@ -8,7 +8,7 @@ using SGBIMFurnas.Data;
 
 namespace SGBIMFurnas.Migrations
 {
-    [DbContext(typeof(EtapaContext))]
+    [DbContext(typeof(DatabaseContext))]
     partial class EtapaContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -17,6 +17,29 @@ namespace SGBIMFurnas.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("SGBIMFurnas.Models.Cargo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Permissions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Valid")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cargos");
+                });
 
             modelBuilder.Entity("SGBIMFurnas.Models.Etapa", b =>
                 {
