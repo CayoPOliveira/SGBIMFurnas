@@ -11,7 +11,4 @@ public class EtapaUpdateDto
     [Required(AllowEmptyStrings = false)]
     [MaxLength]
     public string? Description { get; set; }
-
-    [Required]
-    public bool Valid { get; set; } = true;
 }

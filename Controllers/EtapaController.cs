@@ -32,22 +32,28 @@ public class EtapaController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<EtapaReadDto> RecuperaEtapas([FromQuery] int skip = 0, [FromQuery] int take = 20)
+    public IEnumerable<EtapaReadDto> RecuperaEtapas([FromQuery] int skip = 0, [FromQuery] int take = 5)
     {
-        return _mapper.Map<List<EtapaReadDto>>(_context.Etapas.Skip(skip).Take(take));
+        return _mapper.Map<List<EtapaReadDto>>(_context.Etapas.Where(etapa => etapa.Valid).Skip(skip).Take(take));
     }
 
     [HttpGet("{id}")]
     public IActionResult RecuperaEtapaComId(int id)
     {
-        Etapa etapaEncontrada = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id);
+        Etapa etapaEncontrada = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id && etapa.Valid);
         return etapaEncontrada == null ? NotFound() : Ok(_mapper.Map<EtapaReadDto>(etapaEncontrada));
+    }
+
+    [HttpGet("deleted")]
+    public IEnumerable<EtapaReadDto> RecuperaEtapasQueForamDeletadas([FromQuery] int skip = 0, [FromQuery] int take = 3)
+    {
+        return _mapper.Map<List<EtapaReadDto>>(_context.Etapas.Where(etapa => !etapa.Valid).Skip(skip).Take(take));
     }
 
     [HttpPut("{id}")]
     public IActionResult AtualizaEtapa(int id, [FromBody] EtapaUpdateDto etapaDto)
     {
-        var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id);
+        var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id && etapa.Valid);
         if (etapa == null) return NotFound();
 
         _mapper.Map(etapaDto, etapa);
@@ -58,7 +64,7 @@ public class EtapaController : ControllerBase
     [HttpPatch("{id}")]
     public IActionResult AtualizaEtapaParcial(int id, JsonPatchDocument<EtapaUpdateDto> patch)
     {
-        var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id);
+        var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id && etapa.Valid);
         if (etapa == null) return NotFound();
 
         var etapaAtualizar = _mapper.Map<EtapaUpdateDto>(etapa);
@@ -76,12 +82,24 @@ public class EtapaController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeletaEtapa(int id)
     {
-        var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id);
+        var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id && etapa.Valid);
         if (etapa == null) return NotFound();
 
-        _context.Remove(etapa);
+        etapa.Valid = false;
+        _context.Update(etapa);
         _context.SaveChanges();
         return NoContent();
     }
+
+    //[HttpDelete("{id}")]
+    //public IActionResult DeletaEtapa(int id)
+    //{
+    //    var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id);
+    //    if (etapa == null) return NotFound();
+
+    //    _context.Remove(etapa);
+    //    _context.SaveChanges();
+    //    return NoContent();
+    //}
 
 }

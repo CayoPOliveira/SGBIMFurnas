@@ -5,14 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Configs do banco
+// Dtabase
 var ConnectionString = builder.Configuration.GetConnectionString("SGBIMConecction");
 builder.Services.AddDbContext<EtapaContext>(opts => opts.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
-// Configs do mapper (DTOs)
+// Mapper (DTOs)
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-// Configs de Json
-
-builder.Services.AddControllers();
+// Controller
+builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
