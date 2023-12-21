@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SGBIMFurnas.Data;
 using SGBIMFurnas.Dtos.CargoDto;
-using SGBIMFurnas.Dtos.EtapaDto;
 using SGBIMFurnas.Models;
 
 namespace SGBIMFurnas.Controllers;
