@@ -45,7 +45,7 @@ public class CargoController : ControllerBase
         return cargoEncontrado == null ? NotFound() : Ok(_mapper.Map<CargoReadDto>(cargoEncontrado));
     }
 
-    [HttpGet("deleted")]
+    [HttpGet("Deleted")]
     public IEnumerable<CargoReadDto> RecuperaCargosQueForamDeletados([FromQuery] int skip = 0, [FromQuery] int take = 3)
     {
         return _mapper.Map<List<CargoReadDto>>(_context.Cargos.Where(cargo => !cargo.Valid).Skip(skip).Take(take));
