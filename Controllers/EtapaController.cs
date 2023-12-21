@@ -32,22 +32,22 @@ public class EtapaController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<EtapaReadDto> RecuperaEtapas([FromQuery] int skip = 0, [FromQuery] int take = 5)
+    public IEnumerable<EtapaWithFasesReadDto> RecuperaEtapas([FromQuery] int skip = 0, [FromQuery] int take = 5)
     {
-        return _mapper.Map<List<EtapaReadDto>>(_context.Etapas.Where(etapa => etapa.Valid).Skip(skip).Take(take));
+        return _mapper.Map<List<EtapaWithFasesReadDto>>(_context.Etapas.Where(etapa => etapa.Valid).Skip(skip).Take(take).ToList());
     }
 
     [HttpGet("{id}")]
     public IActionResult RecuperaEtapaComId(int id)
     {
-        Etapa etapaEncontrada = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id && etapa.Valid);
-        return etapaEncontrada == null ? NotFound() : Ok(_mapper.Map<EtapaReadDto>(etapaEncontrada));
+        Etapa etapaEncontrada = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id && etapa.Valid && etapa.Fases.Any(fase => fase.EtapaId == etapa.Id));
+        return etapaEncontrada == null ? NotFound() : Ok(_mapper.Map<EtapaWithFasesReadDto>(etapaEncontrada));
     }
 
     [HttpGet("deleted")]
-    public IEnumerable<EtapaReadDto> RecuperaEtapasQueForamDeletadas([FromQuery] int skip = 0, [FromQuery] int take = 3)
+    public IEnumerable<EtapaWithFasesReadDto> RecuperaEtapasQueForamDeletadas([FromQuery] int skip = 0, [FromQuery] int take = 3)
     {
-        return _mapper.Map<List<EtapaReadDto>>(_context.Etapas.Where(etapa => !etapa.Valid).Skip(skip).Take(take));
+        return _mapper.Map<List<EtapaWithFasesReadDto>>(_context.Etapas.Where(etapa => !etapa.Valid).Skip(skip).Take(take));
     }
 
     [HttpPut("{id}")]

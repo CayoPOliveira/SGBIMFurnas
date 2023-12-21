@@ -19,4 +19,6 @@ public class Etapa
 
     [Required]
     public bool Valid { get; set; } = true;
+
+    public virtual ICollection<Fase> Fases { get; set; }
 }

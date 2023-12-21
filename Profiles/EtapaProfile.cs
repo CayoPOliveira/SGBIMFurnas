@@ -11,5 +11,7 @@ public class EtapaProfile : Profile
         CreateMap<EtapaUpdateDto, Etapa>();
         CreateMap<Etapa, EtapaUpdateDto>();
         CreateMap<Etapa, EtapaReadDto>();
+        CreateMap<Etapa, EtapaWithFasesReadDto>()
+            .ForMember(etapaDto => etapaDto.Fases, opt => opt.MapFrom(etapa => etapa.Fases));
     }
 }
