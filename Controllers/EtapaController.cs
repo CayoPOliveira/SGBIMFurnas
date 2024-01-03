@@ -97,16 +97,4 @@ public class EtapaController : ControllerBase
         _context.SaveChanges();
         return NoContent();
     }
-
-    //[HttpDelete("{id}")]
-    //public IActionResult DeletaEtapa(int id)
-    //{
-    //    var etapa = _context.Etapas.FirstOrDefault(etapa => etapa.Id == id);
-    //    if (etapa == null) return NotFound();
-
-    //    _context.Remove(etapa);
-    //    _context.SaveChanges();
-    //    return NoContent();
-    //}
-
 }
