@@ -30,11 +30,24 @@ public class DatabaseContext : DbContext
            .HasOne(transicao => transicao.FaseSeguinte)
            .WithMany(fase => fase.FasesAnteriores)
            .HasForeignKey(transicao => transicao.FaseSeguinteId);
+
+        // Tarefas -> Fase
+        modelBuilder.Entity<Tarefa>()
+            .HasOne(tarefa => tarefa.Fase)
+            .WithMany(fase => fase.Tarefas)
+            .HasForeignKey(tarefa => tarefa.FaseId);
+
+        modelBuilder.Entity<Tarefa>()
+            .HasOne(tarefa => tarefa.TarefaAnterior)
+            .WithOne(tarefa => tarefa.TarefaSeguinte)
+            .HasForeignKey<Tarefa>(tarefa => tarefa.TarefaAnteriorId)
+            .IsRequired(false);
+        
     }
 
+    public DbSet<Cargo> Cargos { get; set; }
     public DbSet<Etapa> Etapas { get; set; }
     public DbSet<Fase> Fases { get; set; }
-    public DbSet<Cargo> Cargos { get; set; }
     public DbSet<FaseTransicao> FaseTransicao { get; set; }
-
+    public DbSet<Tarefa> Tarefas { get; set; }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SGBIMFurnas.Data;
 
@@ -10,9 +11,10 @@ using SGBIMFurnas.Data;
 namespace SGBIMFurnas.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class EtapaContextModelSnapshot : ModelSnapshot
+    [Migration("20231221062906_CriandoTabelaDeTarefas")]
+    partial class CriandoTabelaDeTarefas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
